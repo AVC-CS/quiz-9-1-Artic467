@@ -71,7 +71,14 @@ void printStudent(Student *head)
 }
 int getLength(Student *head)
 {
-    return 10;
+    int cnt = 0;
+    Student *ptr = head;
+    while (ptr != NULL){
+        cnt++;
+        ptr = ptr->next;
+    }
+
+    return cnt;
 }
 Student *sortStudent(Student *head, int asc)
 {
