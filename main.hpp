@@ -13,13 +13,13 @@ struct Student
     double avg;
     struct Student *next;
 };
-#define struct Student Student;
-// typedef struct Student Student;
 
 Student *makeStudent(int N);
 void printStudent(Student *head);
 int getLength(Student *head);
 Student *sortStudent(Student *head, int asc);
+int compareStudent(Student *tmp, int asc);
+Student *swapStudent(Student *prev, Student *tmp);
 
 Student *makeStudent(int N)
 {
@@ -82,8 +82,45 @@ int getLength(Student *head)
 }
 Student *sortStudent(Student *head, int asc)
 {
-    /*******************************
-     * Code your program here
-     *******************************/
+    Student *tmp, *prev;
+    int iteration, length;
+
+    length = getLength(head);
+    for (int i = 0; i < length - 1; i++){
+        tmp = prev = head;
+        iteration = 0;
+        while (tmp->next != NULL){
+            if (compareStudent(tmp, asc) == 1)
+                tmp = swapStudent(prev, tmp);
+            if (iteration == 0)
+                head = tmp;
+            iteration++;
+            prev = tmp;
+            tmp = tmp->next;
+        }
+    }
     return head;
+}
+
+int compareStudent(Student *tmp, int asc)
+{
+    if (asc == 1){
+        if (tmp->sum > tmp->next->sum)
+            return 1;
+    }
+    else{
+        if (tmp->sum < tmp->next->sum)
+            return 1;
+    }
+    return 0;
+}
+
+Student *swapStudent(Student *prev, Student *tmp)
+{
+    Student *after;
+    after = tmp->next;
+    prev->next = tmp->next;
+    tmp->next = after->next;
+    after->next = tmp;
+    return after;
 }
