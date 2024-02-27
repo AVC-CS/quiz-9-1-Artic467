@@ -23,9 +23,33 @@ Student *sortStudent(Student *head, int asc);
 
 Student *makeStudent(int N)
 {
-    /*******************************
-     * Code your program here
-     *******************************/
+    ifstream ifs;
+    ifs.open("students.txt");
+    if (!ifs)
+    {
+        cerr << "Error: file open error" << endl;
+        exit(0);
+    }
+    Student *head, *tmp, *prev;
+    double studentSum;
+    for(int i=0;i<N;i++){
+        studentSum = 0;
+        Student *tmp = new Student;
+        ifs >> tmp->id >> tmp->name;
+        for (int j = 0; j < NUMCOURSE; j++){
+            ifs >> tmp->score[j];
+            studentSum = studentSum + tmp->score[j];
+        }
+        tmp->sum = studentSum;
+        tmp->avg = studentSum / NUMCOURSE;
+        tmp->next = NULL;
+        if (i == 0)
+            head = tmp;
+        else
+            prev->next = tmp;
+        prev = tmp;
+    }
+    return head;
 }
 void printStudent(Student *head)
 {
@@ -47,9 +71,7 @@ void printStudent(Student *head)
 }
 int getLength(Student *head)
 {
-    /*******************************
-     * Code your program here
-     *******************************/
+    return 10;
 }
 Student *sortStudent(Student *head, int asc)
 {
